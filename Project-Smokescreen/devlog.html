@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<title>Project Smokescreen Devlog</title>
+
+		<style>
+
+			h1 {
+      				color:white;
+    			}
+
+			.par {
+				color:white;
+				margin-left:5%;
+				margin-right:5%
+			}
+
+			.parlink {
+
+				color:#FFFF00;
+
+  				margin-right: 5%;
+  				margin-left: 5%;
+	
+				text-decoration:none;
+
+			}
+	
+		</style>
+
+	</head>
+
+	<body bgcolor="#130131">
+
+		<h1 align="center">Project Smokescreen Devlog</h1>
+
+		<p class="par">
+		3/9/19 @ 11:44 AM
+		<br>
+		<br>
+          	So there's a pretty solid release format now. The 0.0.x versions will all be working towards simulating the world itself. 0.1.0 will be the first major update after 0.0.1, and it will allow for full control over a human in the world, effectively making this project a "game".
+		<br>
+		<br>
+          	As you may have noticed, I just released version 0.0.1. It features a fully functional (albeit a little ugly and messy) GUI. I've gotten through enough bugfixing and work on the backbone that I think it's about time to add some cool features.
+          	<br>
+		<br>
+          	I'll soon be giving humans emotions. I want them to feel pain. And love. But mostly pain, since that's easiest to simulate. On top of that, I'm giving humans relationships, which will just be a construct that contains an "Emotion" object, a title, such as "Friend", "Father", 
+		or "Annoyance", and an ID to allow the program to find the person that the relationship refers to. The Emotion object will contain all of the needed information about an emotional state, from how someone feels about someone else, to their general mood, to how a nation feels 
+		about it's Monarch (hehehe).
+<br><br>=====================================================================================================<br><br>
+
+		31/8/19 @ 11:44 AM<br><br>
+
+          Interesting couple of days. I spent about 5 hours chasing a memory leak which turned out to never have existed at all. I'm simultaneously frustrated and relieved that such an elusive monster doesn't exist.
+
+          The GUI is coming along nicely. It's simple and bland, but it get's the job done. Right now, the whole system is controllable through the GUI. That is, you can take every action in the GUI that you could on the console. I haven't actually gotten to logging events on the GUI itself, but I think I'm going to set up a system for storing and logging history first.
+
+          I removed the ability to have children, because it was being troublesome, and forcing me to look into things that I didn't want to deal with quite yet. Besides, it would really make more sense to introduce that once relationships and emotions were up and running.
+
+          Additionally, Kings and Queens can no longer be Murdered like other major figures. Anyone who tries will fail, which is obviously just a placeholder to avoid some issues. I had to do this for the same reason that I had to remove childbearing. That reason being: I haven't found a way to clean up the dead neatly. If I just remove them from the world as soon as they die, it completely screws up my indexing systems, so I can't find anyone else. If I remove them only at suitable time intervals, the "corpses" will just operate assuming that they are still alive, which is harder to prevent than it should be. I'm thinking I'll just assign the corpses the same ID, so they're all basically the same dead guy, and just skipping over that guy when I go through the humans having them carry out their lives.
+
+          In all; goin' good.
+
+<br><br>=====================================================================================================<br><br>
+
+29/8/19 @ 11:44 AM <br> <br>
+
+          Things have been going rather smoothly. I have remade the way nations access their members and how humans access each other. This doesn't have any actual effects on the simulation, but it will allow me to create political systems that have different kinds of rulers or even groups of rulers, all utilizing their own manner of running things in a nation.
+
+          Kids are a thing now. There's a funny little oversight where toddlers will sometimes overthrow their Monarchs, but it's losing its novelty and comic effect, so I think I'll be removing it soon. Additionally, complete randoes from the general population can rise to fame in order to take part in history.
+
+          Probably the simplest, but most exciting thing I added: Seeded Randomness. Behind the scenes, the world has a seed created, and the world's randomness will play out according to that seed. This makes it so that if the world is run twice with the same seed, the same things will happen. This makes debugging a lot easier, but it will also make it so that I can implement a feature that allows you to start from a certain point in a specific timeline. Any player action pretty much completely screws this up (I think), but the randomly generated portions will be repeatable. I can get around this eventually by actually logging the events of history, but that's a tricky undertaking.
+
+           Next up is either wars, history logging, or a GUI. I may do an incomplete version of any of these three before the next devlog. Wars would be easiest to implement with the existing system, but only as an incomplete version, since a full war system would require some form of relationship tracking between nations and people, which is getting into some emotional stuff. GUI is looking likely, since I'm starting to see need of a way to organize and sort information nicely on the screen. History logging isn't necessary quite yet, but I can tell that in no short time, there will simply be too much happening at once to log it all on the console screen (All the more reason for a GUI).
+
+          There is a bug that I have to tend to though. The game will sometimes crash when someone dies naturally after the birth of a child. Hopefully it won't require any serious rewiring.
+
+<br><br>=====================================================================================================<br><br>
+
+22/8/19 @ 11:44 AM<br><br>
+
+          Things are in nice working order now. Humans determine their own actions now, instead of just following the winds of the nation. This has an interesting implication: If I give the player an interface to do so, they can play as a human. Very easily, actually. I was almost tempted to implement it to see how things would work, but humans can't do anything right now except murder each other and overthrow their rulers. Also, I need to make finer units of time before I can provide control, since you don't want to have to wait a year every time you want to do something.
+
+          Next up, I plan on giving historical figures the ability to have children. In addition, I'm giving a chance for the common population to rise to "Major Figure" status. As it stands right now, all of the Major Figures die off by the end of the first century, with the exception of the ruler that get's pulled from the general population.
+
+<br><br>=====================================================================================================<br><br>
+
+21/8/19 @ 11:44 AM<br><br>
+
+          Slow going. I spent a couple of days working on a solution which just ended up breaking everything. I do mean EVERYTHING. Even things that weren't supposed to be breakable were messed up in the spaghethification process. I actually did learn quite a few things in the process of strangling together the spaghetti code though. In fact, I'm almost excited for the next crippling failure. Although, I didn't quite fail this time.
+Luckily, I thought of a more pragmatic solution, reverted back to when things still worked, and implemented it. The problem with what I was trying to do was, I wanted groups of people to be dynamic, with everyone on the planet able to join whatever groups they like. However, I also didn't want to have to sort through the entire population of the world whenever I needed to do something simple, like get the name of the King. Pointers were useless. Indexing the vectors was unreliable at best. I settled on a decent compromise though.
+
+          Humans exist as part of their "main" group. That's where their data resides. At the moment, this is just the nation that they are a member of. This will allow me to sort through just the members of the nation whenever I need to access something nation-specific. Additionally, I added a new "member" functionality that allows for specific roles in a nation. At the moment, "Monarch" is the only role, just like before. The difference is that instead of a person having to move their data to the "Monarch" slot, they simply become marked as a Monarch. The side effect of this, though, is that Monarchs will occasionally overthrow themselves, often leaving the nation without a ruler. Unfortunately, this is too comical to fix right now, so I'm probably going to come back to it later.
+
+<br><br>=====================================================================================================<br><br>
+
+15/8/19 @ 11:44 AM<br><br>
+
+          Currently, the project has just started. There is a simple interface now which allows you to allow time to advance, and where you can see who the major figures are, which nations they are from, and what they have been doing. Right now they don't do anything other than overthrow and replace their leaders, which obviously isn't sustainable, given the fact that new major figures don't ever pop up, even when existing ones are killed. Additionally, the population of a nation is static and unchanging, so the world is just a group of unaging and infertile people who literally don't do anything their entire life, and whose only chance of having anything happen to them is to die helping a coup.
+
+          Space doesn't exist. Time only really exists on a yearly scale. The humans don't have thoughts or feelings or bodies. Right now, it's just a bunch of vague political structures that contain people who were randomly selected to be considered "special" compared to the others.
+
+          Monarchy is just kind of a placeholder until I can incorporate different political systems and roles into groups. This is a little ways away though, and until then, I'll probably mostly focus on giving the lesser populations more to do, such as having the ability to become a major figure, and actually being able to breed. I'll also give the major figures the ability to have children and die natural deaths. I may even get to making some form of skill system to give Humans some areas of expertise, but it will just exist in a vacuum without context; skills will be randomly selected and will in no way reflect their experiences. Not yet.
+
+		</p>
+
+
+		<h1 align="center"><a class="parlink" href="index.html"> Project Smokescreen Home</a></h1>
+
+	</body>
+
+</html>
